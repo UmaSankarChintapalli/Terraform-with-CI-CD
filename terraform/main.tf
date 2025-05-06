@@ -1,29 +1,27 @@
 provider "aws" {
-region = "us-east-1"
+  region = "us-east-1"
 }
 
 resource "aws_s3_bucket" "s3Bucket" {
-     bucket = "s3-demo-terraform-cicd"
-     acl       = "public-read"
+  bucket = "s3-demo-terraform-cicd"
+  acl    = "public-read"
 
-     policy  = <<EOF
+  policy = <<EOF
 {
-     "id" : "MakePublic",
-   "version" : "2012-10-17",
-   "statement" : [
-      {
-         "action" : [
-             "s3:GetObject"
-          ],
-         "effect" : "Allow",
-         "resource" : "arn:aws:s3:::s3-demo-terraform-cicd/*",
-         "principal" : "*"
-      }
-    ]
-  }
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "MakePublic",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::s3-demo-terraform-cicd/*"
+    }
+  ]
+}
 EOF
 
-   website {
-       index_document = "index.html"
-   }
+  website {
+    index_document = "index.html"
+  }
 }
