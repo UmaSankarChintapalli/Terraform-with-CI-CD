@@ -3,7 +3,7 @@ region = "us-east-1"
 }
 
 resource "aws_s3_bucket" "s3Bucket" {
-     bucket = "[BUCKET_NAME_HERE]"
+     bucket = "s3-demo-terraform-cicd"
      acl       = "public-read"
 
      policy  = <<EOF
@@ -16,7 +16,7 @@ resource "aws_s3_bucket" "s3Bucket" {
              "s3:GetObject"
           ],
          "effect" : "Allow",
-         "resource" : "arn:aws:s3:::[BUCKET_NAME_HERE]/*",
+         "resource" : "arn:aws:s3:::s3-demo-terraform-cicd/*",
          "principal" : "*"
       }
     ]
