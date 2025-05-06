@@ -1,24 +1,29 @@
 provider "aws" {
-  region = "us-east-1"
+region = "us-east-1"
 }
 
-resource "aws_s3_bucket_policy" "public_policy" {
-  bucket = aws_s3_bucket.s3Bucket.id
+resource "aws_s3_bucket" "s3Bucket" {
+     bucket = "[BUCKET_NAME_HERE]"
+     acl       = "public-read"
 
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
+     policy  = <<EOF
+{
+     "id" : "MakePublic",
+   "version" : "2012-10-17",
+   "statement" : [
       {
-        Sid       = "PublicReadGetObject",
-        Effect    = "Allow",
-        Principal = "*",
-        Action    = "s3:GetObject",
-        Resource  = "arn:aws:s3:::my-terraform-with-cicd/*"
+         "action" : [
+             "s3:GetObject"
+          ],
+         "effect" : "Allow",
+         "resource" : "arn:aws:s3:::[BUCKET_NAME_HERE]/*",
+         "principal" : "*"
       }
     ]
-  })
+  }
+EOF
 
-  depends_on = [
-    aws_s3_bucket_public_access_block.public_access
-  ]
+   website {
+       index_document = "index.html"
+   }
 }
