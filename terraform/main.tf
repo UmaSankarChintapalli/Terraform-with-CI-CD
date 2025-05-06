@@ -2,7 +2,7 @@ provider "aws" {
   region = "us-east-1"
 }
 resource "aws_s3_bucket" "s3Bucket" {
-  bucket = "s3-demo-terraform-cicd"
+  bucket = "my-s3-demo-terraform-cicd"
 
   website {
     index_document = "index.html"
